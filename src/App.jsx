@@ -5,6 +5,7 @@ import Register from "./Pages/Register/Register"
 import Game from "./Pages/Game/Game"
 import User from "./Pages/User/User"
 import SharedLayout from "./Pages/SharedLayout/SharedLayout"
+import Error from "./Pages/Error/Error"
 
 function App() {
   return (
