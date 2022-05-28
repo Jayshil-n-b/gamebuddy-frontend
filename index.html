@@ -13,4 +13,17 @@
   <script type="module" src="/src/main.jsx"></script>
 </body>
 
+<script>
+
+  function disableScrolling() {
+    setTimeout(function () {
+      document.body.style.overflow = 'hidden';
+    }, 1000);
+  }
+
+  function enableScrolling() {
+    document.body.style.overflow = '';
+  }
+</script>
+
 </html>

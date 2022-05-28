@@ -1,18 +1,27 @@
-import { Box, Button, Group, Paper, TextInput, PasswordInput } from '@mantine/core';
+import { Box, Button, Group, Paper, TextInput, PasswordInput, Title, Space, Text } from '@mantine/core';
 import { useForm } from '@mantine/form'
-import React from 'react'
+import React, { useEffect } from 'react'
 import apiEndpoint from '../../Interfaces/Axios';
 import { showNotification } from '@mantine/notifications'
 import { CheckIcon, Cross1Icon } from '@modulz/radix-icons'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useUserStore from '../../Interfaces/userStore';
 
 // TODO: Add error message when server is offline
 
 export default function Login() {
+
+  // const location = useLocation()
+
+  useEffect(() => {
+    // console.log(location);
+    console.log("Login");
+  }, [])
+
   const navigate = useNavigate()
 
-  const setUserName = useUserStore((state)=>state.setUserName);
+  const setUserName = useUserStore((state) => state.setUserName);
+  const setUserToken = useUserStore((state) => state.setUserToken)
 
   const loginForm = useForm({
     initialValues: {
@@ -39,6 +48,8 @@ export default function Login() {
         color: "teal",
         icon: <CheckIcon />,
       })
+      sessionStorage.setItem('gameBuddyToken', responseData.access_token)
+      setUserToken(responseData.access_token)
       navigate('/')
     } catch (error) {
       showNotification({
@@ -65,6 +76,8 @@ export default function Login() {
   return (
     <Paper>
       <Box sx={{ maxWidth: 300 }} mx="auto">
+        <Title>Welcome Back...</Title>
+        <Space mb={20} />
         <form onSubmit={loginForm.onSubmit(handleSubmit)} >
           <TextInput
             required
@@ -79,6 +92,10 @@ export default function Login() {
             placeholder="Password"
             {...loginForm.getInputProps('password')}
           />
+          
+          <Group position="right" mt="md">
+            <Text onClick={() => navigate('/register')} style={{textDecoration: 'underline'}}>New User ?</Text>
+          </Group>
 
           <Group position="center" mt="md">
             <Button type="submit">Submit</Button>
