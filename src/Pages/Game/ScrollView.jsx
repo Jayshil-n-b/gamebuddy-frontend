@@ -3,13 +3,13 @@ import apiEndpoint from '../../Interfaces/Axios'
 import { Box, SimpleGrid, Skeleton } from '@mantine/core'
 import GameCard from './GameCard'
 
-export default function ScrollView({ gameid }) {
+export default function ScrollView({ url }) {
     const [recommendations, setRecommendations] = useState([])
     const [loading, setLoading] = useState(true)
 
     const fetchRecommendations = async () => {
         try {
-          const response = await apiEndpoint.get(`/recommend/${gameid}`)
+          const response = await apiEndpoint.get(url)
           setRecommendations(response.data.recommendations)
           console.log(recommendations);
           setLoading(false)

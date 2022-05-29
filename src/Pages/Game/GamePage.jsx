@@ -50,7 +50,7 @@ export default function GamePage() {
       {/* </Skeleton> */}
         <Title ml={20}>Recommendations</Title>
       <Divider size="sm" />
-        <ScrollView gameid={gameid}/>
+        <ScrollView url={`/recommend/${gameid}`} />
       <Divider size="sm" />
       </Stack>
     </Paper>

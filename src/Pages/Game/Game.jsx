@@ -33,7 +33,9 @@ export default function Game({data}) {
       console.log(`Added ${data.appid}`);
       try {
         const response = await apiEndpoint.post('/toggleFavourite', {
-            "appid": data.appid
+            "appid": data.appid,
+            "name": data.name,
+            "header_image": data.header_image
         })
         setFavourite(p => !p)
         console.log(response.data);
@@ -46,7 +48,8 @@ export default function Game({data}) {
     try {
         const response = await apiEndpoint.post('/addHistory', {
             "time": min,
-            "appid": data.appid
+            "appid": data.appid,
+            "header_image": data.header_image
         })
         console.log(response.data);
     } catch (error) {

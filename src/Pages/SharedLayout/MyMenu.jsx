@@ -24,7 +24,7 @@ export default function MyMenu() {
   }
 
   useEffect(() => {
-    getUsername()
+    if (usertoken) getUsername()
   }, [])
   
 

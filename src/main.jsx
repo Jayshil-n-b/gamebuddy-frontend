@@ -16,7 +16,7 @@ const Wrapper = ({children}) => {
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  // <React.StrictMode>
+  <React.StrictMode>
     <BrowserRouter>
       <MantineProvider theme={{ colorScheme: 'dark' }} withGlobalStyles withNormalizeCSS>
         <NotificationsProvider>
@@ -26,5 +26,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </NotificationsProvider>
       </MantineProvider>
     </BrowserRouter>
-  // </React.StrictMode>
+  </React.StrictMode>
 )

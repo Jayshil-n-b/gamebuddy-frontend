@@ -1,16 +1,17 @@
 import { Image, Card, Text, SimpleGrid, Group } from '@mantine/core'
 import React from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate, useLocation } from 'react-router-dom'
 import useUserStore from '../../Interfaces/userStore'
 
 export default function GameCard({id, src, name}) {
     const usertoken = sessionStorage.getItem('gameBuddyToken')
 
     const navigate = useNavigate()
+    const location = useLocation()
 
     const handelNav = () => {
         navigate(`/game/${id}`, {replace: true})
-        navigate(0)
+        if(location.pathname.startsWith('/game')) navigate(0)
     }
 
   return (

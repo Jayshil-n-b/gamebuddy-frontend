@@ -1,6 +1,6 @@
-import { Box, Button, Group, Paper, TextInput, PasswordInput, Title, Space, Text } from '@mantine/core';
+import { Box, Button, Group, Paper, TextInput, PasswordInput, Title, Space, Text, LoadingOverlay } from '@mantine/core';
 import { useForm } from '@mantine/form'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import apiEndpoint from '../../Interfaces/Axios';
 import { showNotification } from '@mantine/notifications'
 import { CheckIcon, Cross1Icon } from '@modulz/radix-icons'
@@ -12,6 +12,7 @@ import useUserStore from '../../Interfaces/userStore';
 export default function Login() {
 
   // const location = useLocation()
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
     // console.log(location);
@@ -35,6 +36,7 @@ export default function Login() {
   })
 
   const handleSubmit = async (values) => {
+    setVisible(true)
     try {
       const response = await apiEndpoint.post('/login', {
         "username": values.username,
@@ -50,6 +52,7 @@ export default function Login() {
       })
       sessionStorage.setItem('gameBuddyToken', responseData.access_token)
       setUserToken(responseData.access_token)
+      setVisible(false)
       navigate('/')
     } catch (error) {
       showNotification({
@@ -59,6 +62,7 @@ export default function Login() {
         icon: <Cross1Icon />,
       })
       console.log(error.response);
+      setVisible(false)
     }
   }
 
@@ -78,29 +82,34 @@ export default function Login() {
       <Box sx={{ maxWidth: 300 }} mx="auto">
         <Title>Welcome Back...</Title>
         <Space mb={20} />
-        <form onSubmit={loginForm.onSubmit(handleSubmit)} >
-          <TextInput
-            required
-            label="Username"
-            placeholder="Username"
-            {...loginForm.getInputProps('username')}
-          />
 
-          <PasswordInput
-            required
-            label="Password"
-            placeholder="Password"
-            {...loginForm.getInputProps('password')}
-          />
-          
-          <Group position="right" mt="md">
-            <Text onClick={() => navigate('/register')} style={{textDecoration: 'underline'}}>New User ?</Text>
-          </Group>
+        <div style={{ position: 'relative' }}>
+        <LoadingOverlay visible={visible} />
+          <form onSubmit={loginForm.onSubmit(handleSubmit)} >
+            <TextInput
+              required
+              label="Username"
+              placeholder="Username"
+              {...loginForm.getInputProps('username')}
+            />
 
-          <Group position="center" mt="md">
-            <Button type="submit">Submit</Button>
-          </Group>
-        </form>
+            <PasswordInput
+              required
+              label="Password"
+              placeholder="Password"
+              {...loginForm.getInputProps('password')}
+            />
+            
+            <Group position="right" mt="md">
+              <Text onClick={() => navigate('/register')} style={{textDecoration: 'underline'}}>New User ?</Text>
+            </Group>
+
+            <Group position="center" mt="md">
+              <Button type="submit">Submit</Button>
+            </Group>
+          </form>
+        </div>
+
       </Box>
     </Paper>
   );
