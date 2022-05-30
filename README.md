@@ -1,4 +1,4 @@
-# Game-Buddy-Backend
+# Game-Buddy-Frontend
 
 ## Links
 
